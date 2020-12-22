@@ -1,0 +1,14 @@
+<RCC>
+ <qresource>
+  <file>images/block.png</file>
+  <file>images/clear.png</file>
+  <file>images/point.png</file>
+  <file>images/pacman.png</file>
+  <file>images/gate.png</file>
+  <file>images/red.png</file>
+  <file>images/green.png</file>
+  <file>images/blue.png</file>
+  <file>images/pink.png</file>
+  <file>images/eat.png</file>
+ </qresource>
+</RCC>
