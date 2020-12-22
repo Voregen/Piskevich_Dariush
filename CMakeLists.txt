@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 3.0)
 
 project(voregen)
 
-set (CMAKE_PREFIX_PATH "C:\\Qt\\5.15.0\\mingw81_64")
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -12,8 +13,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 
 # Find the QtWidgets library
-find_package(Qt5Widgets CONFIG REQUIRED)
-find_package(Qt5 COMPONENTS Widgets Core Gui REQUIRED)
+find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set_property(GLOBAL PROPERTY PREDEFINED_TARGETS_FOLDER "cmake")
@@ -29,5 +29,5 @@ set(voregen
 )
 
 add_executable(${PROJECT_NAME} ${voregen})
-target_link_libraries(${PROJECT_NAME} Qt5::Widgets Qt5::Core Qt5::Gui)
+target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::Widgets)
 

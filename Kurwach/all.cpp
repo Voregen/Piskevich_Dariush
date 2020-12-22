@@ -9,7 +9,6 @@
 #include <QByteArray>
 #include <random>
 
-
 using namespace std;
 
 void all::out(){

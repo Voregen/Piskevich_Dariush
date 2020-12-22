@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "all.h"
-#include <generator.h>
+#include "generator.h"
 #include <QtWidgets>
 
 
