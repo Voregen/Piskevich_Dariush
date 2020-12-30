@@ -43,7 +43,6 @@ MainWindow::MainWindow(QWidget *parent)
     timer->setInterval(200);
     view->setFocus();
     connect(timer, &QTimer::timeout, [=] {
-        view->activateWindow();
         QString a = label1->text(), b = label2->text(), c = label3->text();
         view->f(a, b, c);
         label1->setText(a);
