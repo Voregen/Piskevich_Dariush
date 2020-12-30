@@ -8,14 +8,14 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    auto Generate = new QPushButton(tr("Generate"));
-    auto Start = new QPushButton(tr("Start"));
-    auto Save = new QPushButton(tr("Save"));
-    auto Load = new QPushButton(tr("Load"));
+    auto Generate = new QPushButton(tr("Сгенерировать"));
+    auto Start = new QPushButton(tr("Старт"));
+    auto Save = new QPushButton(tr("Сохранить"));
+    auto Load = new QPushButton(tr("Загрузить"));
 
-    auto label1 = new QLabel(tr("Points = 0"));
-    auto label2 = new QLabel(tr("Time = 0.0"));
-    auto label3 = new QLabel(tr("Lives = 3"));
+    auto label1 = new QLabel(tr("Очки = 0"));
+    auto label2 = new QLabel(tr("Время = 0.0"));
+    auto label3 = new QLabel(tr("Жизни = 3"));
 
     auto view = new all;
 

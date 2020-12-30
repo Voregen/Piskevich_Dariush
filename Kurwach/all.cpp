@@ -381,9 +381,9 @@ void all::stratB(){
 
 
 void all::f(QString &a, QString &b, QString &c) {
-    b = "Pause";
+    b = "Пауза";
     if (win || int(del.size()) == 0){
-        b = "Win";
+        b = "Победа";
         return;
     }
     if (pause || lives == 0) return;
@@ -392,10 +392,10 @@ void all::f(QString &a, QString &b, QString &c) {
         dead[i] = max(0, dead[i] - 1);
     }
     rotate(0, napravlenie[0]);
-    b = "Not in Pause";
+    b = "Игра идет";
     int x = score;
     if (x == 0){
-        a = "Score = 0";
+        a = "Очки = 0";
     } else {
         a = "";
         while(x){
@@ -403,7 +403,7 @@ void all::f(QString &a, QString &b, QString &c) {
             x /= 10;
         }
         reverse(a.begin(), a.end());
-        a = "Score = " + a;
+        a = "Очки = " + a;
     }
     if (!pause && dead[1] == 0) {
         if (nowX[1] == 0 && nowY[1] == 0 && norm(10, 15)){
@@ -452,8 +452,8 @@ void all::f(QString &a, QString &b, QString &c) {
         c += "3";
     }
     if (lives == 0){
-        c = "No lives :(";
-        b = "Lose";
+        c = "Нет жизней :(";
+        b = "Поражение";
     }
 }
 
