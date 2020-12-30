@@ -161,16 +161,16 @@ void all::keyPressEvent(QKeyEvent *event){
         m();
     }
     if (event->key() == Qt::Key_W){
-        napravlenie = 1;
+        napravlenie[0] = 1;
     }
     if (event->key() == Qt::Key_A){
-        napravlenie = 2;
+        napravlenie[0] = 2;
     }
     if (event->key() == Qt::Key_S){
-        napravlenie = 0;
+        napravlenie[0] = 0;
     }
     if (event->key() == Qt::Key_D){
-        napravlenie = 3;
+        napravlenie[0] = 3;
     }
     if (event->key() == Qt::Key_P){
         stop();
@@ -178,100 +178,71 @@ void all::keyPressEvent(QKeyEvent *event){
 }
 
 void all::stratP(){
-    int best = -1;
+    int best = napravlenie[1];
     int otv = 100000;
     if (bonus > 0){
         otv = -100000;
     }
     pair < int, int > H = {nowX[1], nowY[1]};
+    int kk = 0;
+    int k[2];
     for (int i(0); i < 4; ++i){
         int nX = H.first + chX[i], nY = H.second + chY[i];
         if (good(nX, nY)){
-            if (bonus > 0){
-                if (best == -1 || (nowX[0] - nX) * (nowX[0] - nX) + (nowY[0] - nY) * (nowY[0] - nY) > otv){
-                    best = i;
-                    otv = (nowX[0] - nX) * (nowX[0] - nX) + (nowY[0] - nY) * (nowY[0] - nY);
-                }
+            ++kk;
+            if (chX[i] != 0){
+                ++k[0];
             } else {
-                if (best == -1 || (nowX[0] - nX) * (nowX[0] - nX) + (nowY[0] - nY) * (nowY[0] - nY) < otv){
-                    best = i;
-                    otv = (nowX[0] - nX) * (nowX[0] - nX) + (nowY[0] - nY) * (nowY[0] - nY);
+                ++k[1];
+            }
+        }
+    }
+    if (!(kk == 2 && (k[0] == 2 || k[1] == 2))){
+        for (int i(0); i < 4; ++i){
+            int nX = H.first + chX[i], nY = H.second + chY[i];
+            if (good(nX, nY)){
+                if (bonus > 0){
+                    if (best == -1 || (nowX[0] - nX) * (nowX[0] - nX) + (nowY[0] - nY) * (nowY[0] - nY) > otv){
+                        best = i;
+                        otv = (nowX[0] - nX) * (nowX[0] - nX) + (nowY[0] - nY) * (nowY[0] - nY);
+                    }
+                } else {
+                    if (best == -1 || (nowX[0] - nX) * (nowX[0] - nX) + (nowY[0] - nY) * (nowY[0] - nY) < otv){
+                        best = i;
+                        otv = (nowX[0] - nX) * (nowX[0] - nX) + (nowY[0] - nY) * (nowY[0] - nY);
+                    }
                 }
             }
         }
     }
     if (best != -1){
+        napravlenie[1] = best;
         rotate(1, best);
     }
+
 }
 
 void all::stratR(){
-    int best = -1;
+    int best = napravlenie[2];
     int otv = 100000;
     if (bonus > 0){
         otv = -100000;
     }
-    pair < int, int > h = {nowX[0] + 4 * chX[napravlenie], nowY[0] + 4 * chY[napravlenie]};
+    pair < int, int > h = {nowX[0] + 4 * chX[napravlenie[0]], nowY[0] + 4 * chY[napravlenie[0]]};
     pair < int, int > H = {nowX[2], nowY[2]};
+    int kk = 0, k[2];
     for (int i(0); i < 4; ++i){
         int nX = H.first + chX[i], nY = H.second + chY[i];
         if (good(nX, nY)){
-            if (bonus > 0){
-                if (best == -1 || (h.first - nX) * (h.first - nX) + (h.second - nY) * (h.second - nY) > otv){
-                    best = i;
-                    otv = (h.first - nX) * (h.first - nX) + (h.second - nY) * (h.second - nY);
-                }
+            ++kk;
+            if (chX[i] != 0){
+                ++k[0];
             } else {
-                if (best == -1 || (h.first - nX) * (h.first - nX) + (h.second - nY) * (h.second - nY) < otv){
-                    best = i;
-                    otv = (h.first - nX) * (h.first - nX) + (h.second - nY) * (h.second - nY);
-                }
+                ++k[1];
             }
         }
     }
-    if (best != -1){
-        rotate(2, best);
-    }
-}
-
-void all::stratG(){
-    int best = -1;
-    int otv = 100000;
-    if (bonus > 0){
-        otv = -100000;
-    }
-    pair < int, int > h = {nowX[1] + (nowX[1] - nowX[0]) * 2, nowY[1] + (nowY[1] - nowY[0]) * 2};
-    pair < int, int > H = {nowX[3], nowY[3]};
-    for (int i(0); i < 4; ++i){
-        int nX = H.first + chX[i], nY = H.second + chY[i];
-        if (good(nX, nY)){
-            if (bonus > 0){
-                if (best == -1 || (h.first - nX) * (h.first - nX) + (h.second - nY) * (h.second - nY) > otv){
-                    best = i;
-                    otv = (h.first - nX) * (h.first - nX) + (h.second - nY) * (h.second - nY);
-                }
-            } else {
-                if (best == -1 || (h.first - nX) * (h.first - nX) + (h.second - nY) * (h.second - nY) < otv){
-                    best = i;
-                    otv = (h.first - nX) * (h.first - nX) + (h.second - nY) * (h.second - nY);
-                }
-            }
-        }
-    }
-    if (best != -1){
-        rotate(3, best);
-    }
-}
-
-void all::stratB(){
-    if ((nowX[0] - nowX[4]) * (nowX[0] - nowX[4]) + (nowY[0] - nowY[4]) * (nowY[0] - nowY[4]) > 40){
-        int best = -1;
-        int otv = 100000;
-        if (bonus > 0){
-            otv = -100000;
-        }
-        pair < int, int > h = {nowX[0], nowY[0]};
-        pair < int, int > H = {nowX[4], nowY[4]};
+    if (!(kk == 2 && (k[0] == 2 || k[1] == 2))){
         for (int i(0); i < 4; ++i){
             int nX = H.first + chX[i], nY = H.second + chY[i];
             if (good(nX, nY)){
@@ -288,13 +259,110 @@ void all::stratB(){
                 }
             }
         }
+    }
+    if (best != -1){
+        napravlenie[2] = best;
+        rotate(2, best);
+    }
+}
+
+void all::stratG(){
+    int best = napravlenie[3];
+    int otv = 100000;
+    if (bonus > 0){
+        otv = -100000;
+    }
+    pair < int, int > h = {nowX[1] + (nowX[1] - nowX[0]) * 2, nowY[1] + (nowY[1] - nowY[0]) * 2};
+    pair < int, int > H = {nowX[3], nowY[3]};
+    int kk = 0, k[2];
+    for (int i(0); i < 4; ++i){
+        int nX = H.first + chX[i], nY = H.second + chY[i];
+        if (good(nX, nY)){
+            ++kk;
+            if (chX[i] != 0){
+                ++k[0];
+            } else {
+                ++k[1];
+            }
+        }
+    }
+    if (!(kk == 2 && (k[0] == 2 || k[1] == 2))){
+        for (int i(0); i < 4; ++i){
+            int nX = H.first + chX[i], nY = H.second + chY[i];
+            if (good(nX, nY)){
+                if (bonus > 0){
+                    if (best == -1 || (h.first - nX) * (h.first - nX) + (h.second - nY) * (h.second - nY) > otv){
+                        best = i;
+                        otv = (h.first - nX) * (h.first - nX) + (h.second - nY) * (h.second - nY);
+                    }
+                } else {
+                    if (best == -1 || (h.first - nX) * (h.first - nX) + (h.second - nY) * (h.second - nY) < otv){
+                        best = i;
+                        otv = (h.first - nX) * (h.first - nX) + (h.second - nY) * (h.second - nY);
+                    }
+                }
+            }
+        }
+    }
+    if (best != -1){
+        napravlenie[3] = best;
+        rotate(3, best);
+    }
+}
+
+void all::stratB(){
+    if ((nowX[0] - nowX[4]) * (nowX[0] - nowX[4]) + (nowY[0] - nowY[4]) * (nowY[0] - nowY[4]) > 40){
+        int best = napravlenie[4];
+        int otv = 100000;
+        if (bonus > 0){
+            otv = -100000;
+        }
+        pair < int, int > h = {nowX[0], nowY[0]};
+        pair < int, int > H = {nowX[4], nowY[4]};
+        int kk = 0, k[2];
+        for (int i(0); i < 4; ++i){
+            int nX = H.first + chX[i], nY = H.second + chY[i];
+            if (good(nX, nY)){
+                ++kk;
+                if (chX[i] != 0){
+                    ++k[0];
+                } else {
+                    ++k[1];
+                }
+            }
+        }
+        if (!(kk == 2 && (k[0] == 2 || k[1] == 2))){
+            for (int i(0); i < 4; ++i){
+                int nX = H.first + chX[i], nY = H.second + chY[i];
+                if (good(nX, nY)){
+                    if (bonus > 0){
+                        if (best == -1 || (h.first - nX) * (h.first - nX) + (h.second - nY) * (h.second - nY) > otv){
+                            best = i;
+                            otv = (h.first - nX) * (h.first - nX) + (h.second - nY) * (h.second - nY);
+                        }
+                    } else {
+                        if (best == -1 || (h.first - nX) * (h.first - nX) + (h.second - nY) * (h.second - nY) < otv){
+                            best = i;
+                            otv = (h.first - nX) * (h.first - nX) + (h.second - nY) * (h.second - nY);
+                        }
+                    }
+                }
+            }
+        }
         if (best != -1){
+            napravlenie[4] = best;
             rotate(4, best);
         }
     } else {
-        int best = -1;
+        int best = napravlenie[4];
         int otv = 100000;
         pair < int, int > h = {0, 0};
+        if (nowX[4] > 15){
+            h.first = 30;
+        }
+        if (nowY[4] > 15){
+            h.second = 30;
+        }
         pair < int, int > H = {nowX[4], nowY[4]};
         for (int i(0); i < 4; ++i){
             int nX = H.first + chX[i], nY = H.second + chY[i];
@@ -323,7 +391,7 @@ void all::f(QString &a, QString &b, QString &c) {
     for (int i(0); i < 5; ++i){
         dead[i] = max(0, dead[i] - 1);
     }
-    rotate(0, napravlenie);
+    rotate(0, napravlenie[0]);
     b = "Not in Pause";
     int x = score;
     if (x == 0){
@@ -422,7 +490,9 @@ void all::regen() {
         nowX[i] = 0;
         nowY[i] = 0;
         dead[i] = 0;
+        napravlenie[i] = -1;
     }
+    napravlenie[0] = 0;
     for (int i(0); i < int(pole.size()); ++i){
         for (int j(0); j < int(pole[i].size()); ++j){
             if (pole[i][j] > 4){
@@ -460,8 +530,11 @@ void all::stop() {
 }
 
 void all::save() {
+    bool wased = pause;
+    pause = true;
     QString fileName = QFileDialog::getOpenFileName(this,
-        tr("Save Game"), "/", tr("Saves (*.txt)"));
+        tr("Save Game"), (way == "@") ? "/" : way, tr("Saves (*.txt)"));
+    way = fileName;
     QFile fileOut(fileName);
     fileOut.open(QIODevice::WriteOnly | QIODevice::Text);
     QTextStream writeStream(&fileOut);
@@ -475,12 +548,16 @@ void all::save() {
         writeStream << s;
     }
     fileOut.close();
+    pause = wased;
     return;
 }
 
 void all::load() {
+    bool wased = pause;
+    pause = true;
     QString fileName = QFileDialog::getOpenFileName(this,
-        tr("Load Game"), "/", tr("Saves (*.txt)"));
+        tr("Load Game"), (way == "@") ? "/" : way, tr("Saves (*.txt)"));
+    way = fileName;
     QFile fileIn(fileName);
     fileIn.open(QIODevice::ReadOnly | QIODevice::Text);
     QTextStream readStream(&fileIn);
@@ -489,36 +566,8 @@ void all::load() {
         for (int j(0); j < int(pole[i].size()); ++j){
             readStream >> s;
             QChar x = s[0];
-            if (x == QChar('0')){
-                pole[i][j] = 0;
-            }
-            if (x == QChar('1')){
-                pole[i][j] = 1;
-            }
-            if (x == QChar('2')){
-                pole[i][j] = 2;
-            }
-            if (x == QChar('3')){
-                pole[i][j] = 3;
-            }
-            if (x == QChar('4')){
-                pole[i][j] = 4;
-            }
-            if (x == QChar('5')){
-                pole[i][j] = 5;
-            }
-            if (x == QChar('6')){
-                pole[i][j] = 6;
-            }
-            if (x == QChar('7')){
-                pole[i][j] = 7;
-            }
-            if (x == QChar('8')){
-                pole[i][j] = 8;
-            }
-            if (x == QChar('9')){
-                pole[i][j] = 9;
-            }
+            int y = int(x.unicode() - QChar('0').unicode());
+            pole[i][j] = y;
         }
     }
     fileIn.close();
@@ -558,6 +607,7 @@ void all::load() {
         }
     }
     out();
+    pause = wased;
     return;
 }
 

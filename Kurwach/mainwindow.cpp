@@ -1,5 +1,4 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
 #include "all.h"
 #include "generator.h"
 #include <QtWidgets>
@@ -42,7 +41,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     auto timer = new QTimer(this);
     timer->setInterval(200);
+    view->setFocus();
     connect(timer, &QTimer::timeout, [=] {
+        view->activateWindow();
         QString a = label1->text(), b = label2->text(), c = label3->text();
         view->f(a, b, c);
         label1->setText(a);
@@ -50,17 +51,24 @@ MainWindow::MainWindow(QWidget *parent)
         label3->setText(c);
     });
     timer->start();
-
     connect(Generate, &QPushButton::clicked, [=] {
         view->regen();
+        view->setFocus();
     });
     connect(Start, &QPushButton::clicked, [=] {
         view->start();
+        view->setFocus();
     });
     connect(Save, &QPushButton::clicked, [=] {
+        timer->stop();
         view->save();
+        view->setFocus();
+        timer->start();
     });
     connect(Load, &QPushButton::clicked, [=] {
+        timer->stop();
         view->load();
+        view->setFocus();
+        timer->start();
     });
 }
