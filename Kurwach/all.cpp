@@ -534,6 +534,10 @@ void all::save() {
     pause = true;
     QString fileName = QFileDialog::getOpenFileName(this,
         tr("Save Game"), (way == "@") ? "/" : way, tr("Saves (*.txt)"));
+    if(fileName.isEmpty()) {
+        pause = wased;
+        return;
+    }
     way = fileName;
     QFile fileOut(fileName);
     fileOut.open(QIODevice::WriteOnly | QIODevice::Text);
@@ -557,6 +561,10 @@ void all::load() {
     pause = true;
     QString fileName = QFileDialog::getOpenFileName(this,
         tr("Load Game"), (way == "@") ? "/" : way, tr("Saves (*.txt)"));
+    if(fileName.isEmpty()) {
+        pause = wased;
+        return;
+    }
     way = fileName;
     QFile fileIn(fileName);
     fileIn.open(QIODevice::ReadOnly | QIODevice::Text);
