@@ -1,33 +1,35 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required (VERSION 3.0)
 
-project(voregen)
+project(kursach)
 
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-# Find includes in corresponding build directories
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-# Instruct CMake to run moc automatically when needed
 set(CMAKE_AUTOMOC ON)
-# Create code from a list of Qt designer ui files
+set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-# Find the QtWidgets library
-find_package(Qt5 COMPONENTS Widgets REQUIRED)
+set(CMAKE_PREFIX_PATH "C:/Cwork/Qt/5.14.2/msvc2017_64")
 
-set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-set_property(GLOBAL PROPERTY PREDEFINED_TARGETS_FOLDER "cmake")
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/Kurwach/images/ DESTINATION bin/images)
 
-qt5_add_resources(QRCS kurwach/pictures.qrc)
-
-set(voregen
-    Kurwach/generator.cpp
-    Kurwach/all.cpp
-    Kurwach/mainwindow.cpp
-    Kurwach/main.cpp
-    ${QRCS}
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
+add_executable(
+kursach
+	"Kurwach/generator.cpp"  
+	"Kurwach/all.cpp" 
+	"Kurwach/mainwindow.cpp" 
+	"Kurwach/main.cpp" 
+	"Kurwach/generator.h" 
+	"Kurwach/all.h" 
+	"Kurwach/mainwindow.h"
 )
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets Core Gui REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Core Gui REQUIRED)
+target_link_libraries(kursach PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Gui)
 
-add_executable(${PROJECT_NAME} ${voregen})
-target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::Widgets)
+install(TARGETS kursach DESTINATION bin)
 
+install(FILES $<TARGET_FILE:Qt5::Core> DESTINATION bin)
+install(FILES $<TARGET_FILE:Qt5::Gui> DESTINATION bin)
+install(FILES $<TARGET_FILE:Qt5::Widgets> DESTINATION bin)
+
+install(FILES $<TARGET_FILE:Qt5::QWindowsIntegrationPlugin> DESTINATION bin/platforms)
+install(FILES $<TARGET_FILE:Qt5::QWindowsDirect2DIntegrationPlugin> DESTINATION bin/platforms)
