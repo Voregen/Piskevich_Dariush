@@ -51,7 +51,7 @@ void all::die(){
         if (pole[x][y] == 4){
             pole[x][y] = 5;
             nowX[0] = x, nowY[0] = y;
-            items[x][y]->setPixmap(QPixmap(":/images/pacman.png"));
+            items[x][y]->setPixmap(QPixmap("images/pacman.png"));
             break;
         }
     }
@@ -59,10 +59,10 @@ void all::die(){
         if (nowX[i] != 0){
             if (was.count({nowX[i], nowY[i]})){
                 pole[nowX[i]][nowY[i]] = 4;
-                items[nowX[i]][nowY[i]]->setPixmap(QPixmap(":/images/clear.png"));
+                items[nowX[i]][nowY[i]]->setPixmap(QPixmap("images/clear.png"));
             } else {
                 pole[nowX[i]][nowY[i]] = 0;
-                items[nowX[i]][nowY[i]]->setPixmap(QPixmap(":/images/point.png"));
+                items[nowX[i]][nowY[i]]->setPixmap(QPixmap("images/point.png"));
             }
             nowX[i] = 0, nowY[i] = 0;
             dead[i] = 0;
@@ -70,7 +70,7 @@ void all::die(){
     }
     nowX[1] = 10, nowY[1] = 15;
     pole[nowX[1]][nowY[1]] = 6;
-    items[nowX[1]][nowY[1]]->setPixmap(QPixmap(":/images/pink.png"));
+    items[nowX[1]][nowY[1]]->setPixmap(QPixmap("images/pink.png"));
 }
 
 void all::kill(int who){
@@ -90,14 +90,14 @@ void all::rotate(int who, int i){
         }
         if (was.count({nowX[who], nowY[who]})){
             pole[nowX[who]][nowY[who]] = 4;
-            items[nowX[who]][nowY[who]]->setPixmap(QPixmap(":/images/clear.png"));
+            items[nowX[who]][nowY[who]]->setPixmap(QPixmap("images/clear.png"));
         } else {
             pole[nowX[who]][nowY[who]] = 0;
-            items[nowX[who]][nowY[who]]->setPixmap(QPixmap(":/images/point.png"));
+            items[nowX[who]][nowY[who]]->setPixmap(QPixmap("images/point.png"));
         }
         if (f && who != 0){
             pole[nowX[who]][nowY[who]] = 3;
-            items[nowX[who]][nowY[who]]->setPixmap(QPixmap(":/images/eat.png"));
+            items[nowX[who]][nowY[who]]->setPixmap(QPixmap("images/eat.png"));
         }
         nowX[who] += chX[i];
         nowY[who] += chY[i];
@@ -126,7 +126,7 @@ void all::rotate(int who, int i){
             if (pole[nowX[who]][nowY[who]] == 9){
                 kill(4);
             }
-            items[nowX[who]][nowY[who]]->setPixmap(QPixmap(":/images/pacman.png"));
+            items[nowX[who]][nowY[who]]->setPixmap(QPixmap("images/pacman.png"));
         } else {
             if (nowX[0] == nowX[who] && nowY[0] == nowY[who]){
                 if (bonus > 0){
@@ -137,16 +137,16 @@ void all::rotate(int who, int i){
                 return;
             }
             if (who == 1){
-                items[nowX[who]][nowY[who]]->setPixmap(QPixmap(":/images/pink.png"));
+                items[nowX[who]][nowY[who]]->setPixmap(QPixmap("images/pink.png"));
             }
             if (who == 2){
-                items[nowX[who]][nowY[who]]->setPixmap(QPixmap(":/images/red.png"));
+                items[nowX[who]][nowY[who]]->setPixmap(QPixmap("images/red.png"));
             }
             if (who == 3){
-                items[nowX[who]][nowY[who]]->setPixmap(QPixmap(":/images/green.png"));
+                items[nowX[who]][nowY[who]]->setPixmap(QPixmap("images/green.png"));
             }
             if (who == 4){
-                items[nowX[who]][nowY[who]]->setPixmap(QPixmap(":/images/blue.png"));
+                items[nowX[who]][nowY[who]]->setPixmap(QPixmap("images/blue.png"));
             }
         }
         pole[nowX[who]][nowY[who]] = who + 5;
@@ -621,16 +621,16 @@ void all::load() {
 
 all::all() {
     pixmaps = {
-        QPixmap(":/images/point.png"),
-        QPixmap(":/images/block.png"),
-        QPixmap(":/images/gate.png"),
-        QPixmap(":/images/eat.png"),
-        QPixmap(":/images/clear.png"),
-        QPixmap(":/images/pacman.png"),
-        QPixmap(":/images/pink.png"),
-        QPixmap(":/images/red.png"),
-        QPixmap(":/images/green.png"),
-        QPixmap(":/images/blue.png"),
+        QPixmap("images/point.png"),
+        QPixmap("images/block.png"),
+        QPixmap("images/gate.png"),
+        QPixmap("images/eat.png"),
+        QPixmap("images/clear.png"),
+        QPixmap("images/pacman.png"),
+        QPixmap("images/pink.png"),
+        QPixmap("images/red.png"),
+        QPixmap("images/green.png"),
+        QPixmap("images/blue.png"),
     };
     scene= new QGraphicsScene();
     scene->setBackgroundBrush(QColor(230, 200, 167));
